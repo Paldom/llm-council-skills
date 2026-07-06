@@ -1,0 +1,77 @@
+{
+  "skill": "llm-council-members",
+  "cases": [
+    { "type": "should_trigger", "prompt": "which models should sit on my LLM council" },
+    { "type": "should_trigger", "prompt": "pick council members" },
+    { "type": "should_trigger", "prompt": "personas vs different models" },
+    { "type": "should_trigger", "prompt": "design the advisor lenses" },
+    { "type": "should_trigger", "prompt": "is running GPT plus Claude plus Gemini actually more diverse than three GPT personas?" },
+    { "type": "should_trigger", "prompt": "does it matter if all my reviewers are secretly the same underlying model wearing different hats?" },
+    { "type": "should_trigger", "prompt": "how many models should i put on the panel and from which providers" },
+    { "type": "should_trigger", "prompt": "need help choosing who's on the council, kinda in a rush" },
+    { "type": "should_trigger", "prompt": "we want an advisory panel of AI models for big decisions, who should be on it" },
+    { "type": "should_trigger", "prompt": "should i just use 5 personas on one model, or actually different model providers?" },
+    { "type": "should_not_trigger", "prompt": "design the pipeline stages and stopping rule for our multi-model debate" },
+    { "type": "should_not_trigger", "prompt": "should we even bother with a council for this task, or is one strong model enough?" },
+    { "type": "should_not_trigger", "prompt": "write the advisor and chairman system prompts for our council" },
+    { "type": "should_not_trigger", "prompt": "which LLM is best for coding right now?" },
+    { "type": "should_not_trigger", "prompt": "GPT-5.5 vs Claude Opus for creative writing, which one's better?" },
+    { "type": "should_not_trigger", "prompt": "how do I fine-tune Llama on our support ticket dataset?" },
+    { "type": "should_not_trigger", "prompt": "what's the best LoRA setup for fine-tuning a 7B model?" },
+    { "type": "should_not_trigger", "prompt": "who should I hire to round out my engineering team?" },
+    { "type": "should_not_trigger", "prompt": "we need to hire two more human advisors for our board" },
+    { "type": "should_not_trigger", "prompt": "how do we aggregate the council members' rankings into one final score?" },
+    { "type": "should_not_trigger", "prompt": "one of our council members keeps timing out, how do we handle that failure gracefully?" },
+    { "type": "should_not_trigger", "prompt": "what's the cheapest way to run our multi-model setup without blowing the token budget?" },
+    {
+      "type": "quality",
+      "prompt": "which models should sit on my LLM council",
+      "expected_behavior": [
+        "recommends diversifying provider/training lineage (e.g. Anthropic + OpenAI + Google, optionally xAI/open-weight) rather than just adding more personas on one model",
+        "cites the correlated-errors evidence (models sharing the same wrong answer, higher correlation among more accurate models) as the reason same-model persona panels give theatrical not epistemic diversity",
+        "recommends a 3-5 member panel size as the practical range",
+        "mentions anonymizing members during deliberation since revealing identities increases convergence",
+        "does not drift into pipeline topology, aggregation math, or prompt wording — stays scoped to member/role selection"
+      ]
+    },
+    {
+      "type": "quality",
+      "prompt": "is running GPT plus Claude plus Gemini actually more diverse than three GPT personas?",
+      "expected_behavior": [
+        "answers yes and explains why: provider-diverse models have decorrelated training lineages while same-model personas are prompt variations over one set of weights",
+        "cites concrete evidence (correlated-errors study, ~60% same-wrong-answer rate, low independent-vote count across a judge panel) rather than just asserting it",
+        "notes the caveat that heterogeneity must be paired with structure (e.g. role assignment) to pay off, not just heterogeneity for its own sake"
+      ]
+    },
+    {
+      "type": "quality",
+      "prompt": "we only have access to one model's API — should we still run a 5-persona council?",
+      "expected_behavior": [
+        "says this is legitimate as a cheap structured self-review but must be labeled honestly as one reasoning trace with N lenses, not a vote",
+        "warns it gives zero protection against that single model's own blind spots",
+        "recommends escalating to true multi-provider members for high-stakes decisions",
+        "still gives concrete lens-design guidance (cognitive mandates, not costumes) for the single-model case"
+      ]
+    },
+    {
+      "type": "quality",
+      "prompt": "design the advisor lenses for our council",
+      "expected_behavior": [
+        "recommends cognitive constraints/mandates over persona costumes (e.g. 'required to find one flaw' vs 'you are a skeptic')",
+        "offers the standard 5-lens set (Contrarian, First Principles, Expansionist, Outsider, Executor)",
+        "recommends round-robining a small lens set over members so blind spots decorrelate on both the model axis and the lens axis",
+        "defers exact prompt wording to the sibling llm-council-prompts skill rather than writing full prompt text itself"
+      ]
+    },
+    {
+      "type": "quality",
+      "prompt": "should we just keep resampling our best single model instead of mixing in weaker heterogeneous ones?",
+      "expected_behavior": [
+        "acknowledges the Self-MoA counterpoint: repeated sampling of the single strongest model can beat mixing in weaker heterogeneous models",
+        "frames the tradeoff as task-dependent: heterogeneity earns its keep on ambiguous/value-laden tasks without one ground truth, not on simple factual tasks",
+        "warns that a weak proposer dilutes a heterogeneous mix rather than helping it",
+        "does not present heterogeneity as an unconditional win"
+      ]
+    }
+  ]
+}

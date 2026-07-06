@@ -1,0 +1,69 @@
+{
+  "skill": "llm-council-when",
+  "cases": [
+    { "type": "should_trigger", "prompt": "should I use an LLM council for this?" },
+    { "type": "should_trigger", "prompt": "is it worth querying multiple models and merging the answers?" },
+    { "type": "should_trigger", "prompt": "council vs single model?" },
+    { "type": "should_trigger", "prompt": "would asking 3 different AIs the same question give better answers than one good one?" },
+    { "type": "should_trigger", "prompt": "is running an ensemble of LLMs worth the extra cost here?" },
+    { "type": "should_trigger", "prompt": "do i need multi-model deliberation or will one strong model do" },
+    { "type": "should_trigger", "prompt": "is a debate between models actually better than just letting one model think longer?" },
+    { "type": "should_trigger", "prompt": "worth it to have several models vote on the answer instead of trusting one?" },
+    { "type": "should_trigger", "prompt": "should we set up a panel of models to double-check this output before it ships?" },
+    { "type": "should_trigger", "prompt": "is querying gpt, claude, and gemini all at once and combining the answers actually better than picking the best single one?" },
+    { "type": "should_not_trigger", "prompt": "help me design the pipeline for our LLM council" },
+    { "type": "should_not_trigger", "prompt": "how should the stages of the council pipeline be structured and orchestrated?" },
+    { "type": "should_not_trigger", "prompt": "how do I cut the cost of our existing LLM council?" },
+    { "type": "should_not_trigger", "prompt": "our council setup is too expensive, how do we reduce token spend on it?" },
+    { "type": "should_not_trigger", "prompt": "which models should be members of the council?" },
+    { "type": "should_not_trigger", "prompt": "help me pick 3 diverse models to put on the panel" },
+    { "type": "should_not_trigger", "prompt": "which LLM should I use for a chat app?" },
+    { "type": "should_not_trigger", "prompt": "what's the best model for coding assistance right now?" },
+    { "type": "should_not_trigger", "prompt": "how do I A/B test two different prompt variants?" },
+    { "type": "should_not_trigger", "prompt": "set up an A/B test comparing prompt wording for our support bot" },
+    { "type": "should_not_trigger", "prompt": "how do we aggregate the council's answers into one final response?" },
+    { "type": "should_not_trigger", "prompt": "write the synthesizer prompt that combines the council members' outputs" },
+    {
+      "type": "quality",
+      "prompt": "Is it worth setting up an LLM council for our customer support ticket classifier, or should we just use one strong model?",
+      "expected_behavior": [
+        "defaults to recommending a single strong model with a long thinking budget unless the four conditions for a council are shown to hold",
+        "walks through the four conditions: task difficulty/ambiguity, parallelizability, cost of a wrong answer vs 3-6x inference cost, and availability of genuinely heterogeneous members",
+        "asks whether the classifier task is actually hard/ambiguous or mostly easy-majority routine, since compute-matched council gains concentrate on hard items",
+        "recommends framing the decision as cost-per-resolved-outcome rather than cost-per-query, and suggests an escalation/triage design (single model for the easy majority, council only for the flagged hard tail) rather than an all-or-nothing choice",
+        "suggests benchmarking both the single-model and council paths on the user's own workload before deciding"
+      ]
+    },
+    {
+      "type": "quality",
+      "prompt": "We got a benchmark showing our multi-agent debate setup beats a single GPT-4 call by 12 points, should we ship it?",
+      "expected_behavior": [
+        "does not take the benchmark at face value; asks whether thinking-token budgets were equalized between the single-model and debate conditions",
+        "flags that majority voting alone explains most reported multi-agent-debate gains, and that the debate dialogue itself may not add value beyond voting",
+        "raises the possibility that API-based budget controls can artificially inflate multi-agent gains if the comparison wasn't compute-matched",
+        "recommends re-running the comparison with equal token budgets before trusting the 12-point gap",
+        "does not simply say yes or no without asking for this evidence"
+      ]
+    },
+    {
+      "type": "quality",
+      "prompt": "would asking 3 different AIs the same question give better answers than one good one?",
+      "expected_behavior": [
+        "recognizes this as a should-I-use-a-council question even though no council terminology was used",
+        "explains that a council only earns its multiplier when the task is hard/ambiguous, parallelizable, the cost of a wrong answer is high, and the models are genuinely heterogeneous (not near-duplicate failure modes)",
+        "notes that under equal thinking-token budgets a single strong model often matches or beats multi-model approaches on sequential reasoning tasks",
+        "states the default recommendation is a single strong model with a long thinking budget, not multiple models, absent evidence the four conditions hold"
+      ]
+    },
+    {
+      "type": "quality",
+      "prompt": "should we use a panel of judge models to score our chatbot outputs instead of one judge?",
+      "expected_behavior": [
+        "distinguishes this evaluation/judging use case from the generation use case the core decision rule targets",
+        "notes that councils/panels of judges for subjective evaluation are comparatively well validated (more separable, robust, human-consistent rankings) unlike generation councils",
+        "mentions that a panel of smaller diverse judges can beat a single large judge at meaningfully lower cost",
+        "still recommends validating on the user's own eval set rather than assuming the published results transfer directly"
+      ]
+    }
+  ]
+}

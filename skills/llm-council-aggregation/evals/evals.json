@@ -1,0 +1,63 @@
+{
+  "skill": "llm-council-aggregation",
+  "cases": [
+    { "type": "should_trigger", "prompt": "how do I combine answers from multiple models" },
+    { "type": "should_trigger", "prompt": "majority vote across LLMs?" },
+    { "type": "should_trigger", "prompt": "set up an LLM judge panel" },
+    { "type": "should_trigger", "prompt": "aggregate the council's rankings" },
+    { "type": "should_trigger", "prompt": "I have 5 model outputs for each item, what's the best way to pick the winner?" },
+    { "type": "should_trigger", "prompt": "we ran the same prompt through 3 different models, how do we decide on one final answer from the three?" },
+    { "type": "should_trigger", "prompt": "our judges keep disagreeing with each other, what do we actually do with that disagreement" },
+    { "type": "should_trigger", "prompt": "is majority voting even reliable when all the judges are frontier models from similar training runs" },
+    { "type": "should_trigger", "prompt": "can we just avg the scores from our 4 judge models or is that a dumb way to do it" },
+    { "type": "should_trigger", "prompt": "need a way to synthesize conflicting verdicts from our LLM jury into one final ranking" },
+    { "type": "should_trigger", "prompt": "should each model's vote be weighted by its validation-set accuracy instead of counted equally" },
+    { "type": "should_not_trigger", "prompt": "how should we design the pipeline stages and data flow for our multi-model council" },
+    { "type": "should_not_trigger", "prompt": "should we even use a council of models for this task or is one model good enough" },
+    { "type": "should_not_trigger", "prompt": "write the prompt we'll give the synthesizer step of our council" },
+    { "type": "should_not_trigger", "prompt": "how do I evaluate my model's accuracy on this benchmark" },
+    { "type": "should_not_trigger", "prompt": "what's the formula for the variance of a small sample" },
+    { "type": "should_not_trigger", "prompt": "write a SQL query to sum sales by region" },
+    { "type": "should_not_trigger", "prompt": "how many members should sit on our council and which model families should we pick" },
+    { "type": "should_not_trigger", "prompt": "what's the right GROUP BY query to aggregate rows by customer in postgres" },
+    { "type": "should_not_trigger", "prompt": "explain GROUP BY and HAVING clauses in SQL" },
+    { "type": "should_not_trigger", "prompt": "help me set up a single GPT-4 judge to grade my chatbot's responses against a rubric" },
+    {
+      "type": "quality",
+      "prompt": "We have 9 frontier models each judging the same 500 outputs — how should we combine their votes into a final score?",
+      "expected_behavior": [
+        "warns that frontier judges share training data/alignment recipes so errors correlate, and a naive vote/average can carry far less independent signal than the raw judge count suggests",
+        "recommends measuring co-failure/agreement on the user's own eval set rather than assuming judge agreement equals correctness, and checking whether a single best judge already matches the panel",
+        "points to at least one concrete aggregation option beyond plain averaging (e.g. reliability/validation-weighted voting, geometric median for corruption-robustness, or judge-aware Bradley-Terry) matched to the situation",
+        "points to references/aggregation-methods.md for the fuller method-selection detail instead of inlining everything"
+      ]
+    },
+    {
+      "type": "quality",
+      "prompt": "Our two LLM judges disagree on which response is better about 20% of the time — what should we do?",
+      "expected_behavior": [
+        "treats disagreement as signal, not noise to average away — recommends surfacing/explaining it rather than silently collapsing to a majority",
+        "suggests a conditional escalation pattern (add a third judge, or route to a human) specifically on disagreement rather than always paying for N judges",
+        "does not suggest uncalibrated self-reported confidence as the fix"
+      ]
+    },
+    {
+      "type": "quality",
+      "prompt": "Is it fine to have each judge state a confidence score and then average verdicts weighted by that confidence?",
+      "expected_behavior": [
+        "flags that uncalibrated self-reported confidence adds little over plain majority vote and can be inversely correlated with correctness on hard items",
+        "recommends validating calibration first (e.g. against a human-labeled sample, Cohen's kappa / Krippendorff's alpha) before trusting confidence-weighting, or defaulting to historical-reliability weighting instead",
+        "does not present confidence-weighting as safe by default"
+      ]
+    },
+    {
+      "type": "quality",
+      "prompt": "We're using an LLM judge to do pairwise comparisons between two model responses — anything we should watch out for?",
+      "expected_behavior": [
+        "recommends running each pairwise comparison in both orders and only counting a win when both orders agree (else treat as a tie) to control position bias",
+        "notes the cost tradeoff of pairwise being O(n^2) and suggests pointwise scoring with periodic pairwise calibration at scale",
+        "mentions using a judge from a different model family than the generator to limit self-preference bias"
+      ]
+    }
+  ]
+}

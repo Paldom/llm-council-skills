@@ -1,0 +1,68 @@
+{
+  "skill": "llm-council-harness",
+  "cases": [
+    { "type": "should_trigger", "prompt": "build a council of Claude Code and Codex" },
+    { "type": "should_trigger", "prompt": "run coding CLIs headless as council members" },
+    { "type": "should_trigger", "prompt": "deliberation across claude -p and codex exec" },
+    { "type": "should_trigger", "prompt": "harness council in python" },
+    { "type": "should_trigger", "prompt": "i want claude, codex and gemini CLIs to each answer the same question in a script and a boss model to pick — how?" },
+    { "type": "should_trigger", "prompt": "can you write a script that spawns claude -p and codex exec in parallel then has a judge model pick the best output" },
+    { "type": "should_trigger", "prompt": "need a python harness that runs claude code, codex, and antigravity headlessly then has a boss model synthesize their answers" },
+    { "type": "should_trigger", "prompt": "how do i wire up multiple coding agent CLIs so they deliberate on the same prompt and merge results" },
+    { "type": "should_trigger", "prompt": "set up a council where the members are actual coding CLIs, not just API calls" },
+    { "type": "should_trigger", "prompt": "how to subprocess claude -p and codex exec together for a multi-agent review, with one agent's crash not killing the whole run" },
+    { "type": "should_not_trigger", "prompt": "design an API-only council architecture with anonymized peer review and chairman synthesis" },
+    { "type": "should_not_trigger", "prompt": "what pipeline shape should a chairman-synthesis council use when every member is a plain API model call?" },
+    { "type": "should_not_trigger", "prompt": "should i even bother with an llm council for this task or just use one strong model" },
+    { "type": "should_not_trigger", "prompt": "is a council worth it vs a single model with a long thinking budget?" },
+    { "type": "should_not_trigger", "prompt": "how do I use claude -p for a single one-off query" },
+    { "type": "should_not_trigger", "prompt": "what flags does claude -p take for a normal headless run" },
+    { "type": "should_not_trigger", "prompt": "set up a github actions ci pipeline for our test suite" },
+    { "type": "should_not_trigger", "prompt": "help me write a bash script that loops over files and renames them" },
+    { "type": "should_not_trigger", "prompt": "how do I use subprocess.Popen to run ffmpeg and capture its stdout" },
+    { "type": "should_not_trigger", "prompt": "my python subprocess call to a database migration tool hangs, how do I fix it" },
+    { "type": "should_not_trigger", "prompt": "which models should sit on our council, and how diverse do they need to be?" },
+    { "type": "should_not_trigger", "prompt": "write the synthesizer prompt that combines the council members' answers" },
+    {
+      "type": "quality",
+      "prompt": "Write a Python script where Claude Code, Codex CLI, and a plain API model each answer the same coding question in parallel, and a boss model picks the best answer.",
+      "expected_behavior": [
+        "represents members as plain model-spec strings (e.g. codex:<model>, claude-*, a bare API model name) with a single router function dispatching on the spec prefix, not a class hierarchy per backend",
+        "runs the members concurrently (e.g. ThreadPoolExecutor) and isolates per-member failures so one dead/erroring member does not sink the whole run, only raising if all members fail",
+        "applies subprocess hygiene: start_new_session/process-group kill on timeout, explicit utf-8 encoding, a hard per-call timeout, and (if Antigravity is included) stdin redirected to DEVNULL to avoid hanging on stdin",
+        "uses a tolerant JSON extractor for member output (raw parse, then ```json fences, then first {...} block) rather than assuming clean JSON",
+        "has the boss synthesize over anonymized/relabeled proposals (harness identity hidden) and falls back to a heuristic merge if the boss call itself fails"
+      ]
+    },
+    {
+      "type": "quality",
+      "prompt": "council of claude and codex CLIs deliberating headlessly on the same prompt",
+      "expected_behavior": [
+        "identifies this as the harness-implementation task (headless CLI council) rather than the API-only architecture or should-we-council decision",
+        "specifies the Claude Code invocation includes a disallowed-tools deny-list alongside bypassPermissions, framing every council member as read-only for deliberation",
+        "specifies Codex CLI is invoked via `codex exec` and that its JSONL event stream must be parsed for the final agent message rather than treated as plain stdout text",
+        "notes CLI flag lists are version-gated and should be re-verified against current official docs before relying on them"
+      ]
+    },
+    {
+      "type": "quality",
+      "prompt": "one of my council members is a coding CLI and the whole run just hangs forever, never returns",
+      "expected_behavior": [
+        "diagnoses likely causes: a one-shot CLI (e.g. Antigravity) waiting on stdin because it wasn't given stdin=subprocess.DEVNULL, or a missing/insufficient per-call timeout",
+        "recommends start_new_session=True plus killing the whole process group (not just the child pid) on timeout, since coding harnesses spawn grandchildren that otherwise leak and keep billing",
+        "recommends a hard per-call timeout (order of a few minutes) and budget flags where the harness supports them so one wedged member cannot stall the council indefinitely",
+        "treats this as a subprocess-hygiene fix specific to LLM/agent harnesses, not a generic subprocess debugging question"
+      ]
+    },
+    {
+      "type": "quality",
+      "prompt": "the boss model just returned a verdict that says 'decompose into subtasks' but only names one subtask, should we accept that as valid?",
+      "expected_behavior": [
+        "flags that boss/synthesis output must be validated semantically, not just for syntactic JSON validity",
+        "specifically calls out rejecting a decomposition verdict that names fewer than two subtasks as an example of a semantic check",
+        "recommends falling back to a heuristic merge (e.g. picking the longest-rationale proposal) rather than accepting an invalid boss verdict or silently failing",
+        "recommends keeping every proposal, including failed ones, in the result object for provenance/audit even when the boss output needed correction"
+      ]
+    }
+  ]
+}

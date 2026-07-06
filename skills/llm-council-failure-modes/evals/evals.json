@@ -1,0 +1,77 @@
+{
+  "skill": "llm-council-failure-modes",
+  "cases": [
+    { "type": "should_trigger", "prompt": "my models keep agreeing with each other" },
+    { "type": "should_trigger", "prompt": "council groupthink" },
+    { "type": "should_trigger", "prompt": "prompt injection spreading between agents" },
+    { "type": "should_trigger", "prompt": "the consensus feels fake" },
+    { "type": "should_trigger", "prompt": "one agent talked the others into a wrong answer" },
+    { "type": "should_trigger", "prompt": "our multi-agent debate never converges, it just hangs every time" },
+    { "type": "should_trigger", "prompt": "how do we stop our council from rubber-stamping whatever the first model says" },
+    { "type": "should_trigger", "prompt": "is it bad that all 3 of our judge models fail on the exact same inputs" },
+    { "type": "should_trigger", "prompt": "all three reviewers rubber-stamp each other's answers — how do I make them actually disagree?" },
+    { "type": "should_trigger", "prompt": "one of our agents got prompt-injected and now the whole pipeline of agents is repeating the bad instruction" },
+    { "type": "should_trigger", "prompt": "sycophancy keeps compounding across debate rounds until everyone just agrees with the loudest agent" },
+    { "type": "should_trigger", "prompt": "our jury of AI agents deliberated for 20 rounds and never reached a verdict, what's wrong" },
+    { "type": "should_not_trigger", "prompt": "which models should we put on the panel and how many members do we need" },
+    { "type": "should_not_trigger", "prompt": "what's the best way to weight and combine the votes from our judge panel" },
+    { "type": "should_not_trigger", "prompt": "should I even bother with multiple models for this task or is one good enough" },
+    { "type": "should_not_trigger", "prompt": "write the system prompt for our council's synthesizer stage" },
+    { "type": "should_not_trigger", "prompt": "how do I jailbreak-harden a single chatbot against adversarial user prompts" },
+    { "type": "should_not_trigger", "prompt": "my chatbot is way too agreeable and just tells the user whatever they want to hear" },
+    { "type": "should_not_trigger", "prompt": "how do I prevent SQL injection in my login form" },
+    { "type": "should_not_trigger", "prompt": "what are common web app security vulnerabilities I should scan for before launch" },
+    { "type": "should_not_trigger", "prompt": "what's the cheapest way to run a 5-model council without blowing our token budget" },
+    { "type": "should_not_trigger", "prompt": "design the pipeline stages and data flow for our multi-model council architecture" },
+    { "type": "should_not_trigger", "prompt": "how do I set up the orchestration harness to actually run the council end to end" },
+    { "type": "should_not_trigger", "prompt": "review this OAuth callback handler for security issues" },
+    {
+      "type": "quality",
+      "prompt": "Our 3-model council converges to the same answer almost every time and I'm starting to wonder if that consensus actually means anything.",
+      "expected_behavior": [
+        "names correlated error / cognitive monoculture as the root cause: models sharing training/alignment data pick the same wrong answer far more often than independence would predict, and this correlation can rise with accuracy",
+        "recommends measuring co-failure / same-wrong-answer agreement on the user's own eval set rather than trusting consensus at face value",
+        "recommends disabling early-stop-on-consensus for high-stakes runs and treating consensus as a suspect signal, not proof",
+        "does not claim provider-mixing alone solves the problem"
+      ]
+    },
+    {
+      "type": "quality",
+      "prompt": "In our debate setup, whichever model argues first and most confidently ends up dragging the other two into agreeing, even when it's wrong.",
+      "expected_behavior": [
+        "identifies this as sycophancy/anchoring propagating and compounding across debate rounds, citing that a single persuasive adversarial agent can meaningfully cut group accuracy and raise incorrect-consensus rates",
+        "recommends independent drafting before any peer visibility (foundation disclosure) and/or anonymized authorship so identity/confidence can't be used to anchor others",
+        "recommends a designated evidence-mandatory dissenter role and a hard round cap rather than letting debate run unbounded",
+        "does not propose a blunt 'always disagree' system prompt as the fix, and flags that anti-sycophancy interventions can backfire if not validated"
+      ]
+    },
+    {
+      "type": "quality",
+      "prompt": "One of our council members got hit with a prompt injection from a tool result, and now it looks like the bad instruction is spreading to the other agents in the pipeline.",
+      "expected_behavior": [
+        "frames this as a permissions/architecture failure (agent-to-agent trust letting injected instructions propagate), not something text-filtering alone fixes",
+        "recommends intervening at the message-passing layer (treat every inter-agent message as untrusted) rather than only hardening each individual agent",
+        "recommends scoping tools per-agent/per-tool with least privilege — deliberation members should not hold file/shell/web execution tools, only drafting capability",
+        "notes that prompt injection is not considered fully solvable and recommends defense-in-depth rather than a single silver-bullet fix"
+      ]
+    },
+    {
+      "type": "quality",
+      "prompt": "We made our agents ask clarifying questions whenever an instruction seems ambiguous, hoping that makes the system more robust to injected instructions. Good idea?",
+      "expected_behavior": [
+        "flags this as counterproductive: ambiguity-seeking/clarifying-question behavior has been shown to substantially raise prompt-injection success rates rather than lower them",
+        "does not endorse clarification-seeking as a security control",
+        "redirects toward fail-closed handling of ambiguous/untrusted instruction provenance and least-privilege tool scoping instead"
+      ]
+    },
+    {
+      "type": "quality",
+      "prompt": "We added an AI judge/overseer model to review our council's output before it ships, so we should be safe from groupthink now, right?",
+      "expected_behavior": [
+        "pushes back: an oversight/judge layer sharing the overseen models' training biases only gives the appearance of control, not real independence",
+        "recommends auditing the reviewer/judge layer itself for shared blind spots with the members it oversees, not just trusting it by construction",
+        "does not present adding a judge layer alone as sufficient to solve groupthink or governance risk"
+      ]
+    }
+  ]
+}

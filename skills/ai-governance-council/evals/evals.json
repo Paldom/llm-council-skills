@@ -1,0 +1,65 @@
+{
+  "skill": "ai-governance-council",
+  "cases": [
+    { "type": "should_trigger", "prompt": "Set up an AI governance council for our company before we launch any new models." },
+    { "type": "should_trigger", "prompt": "we need a review process before shipping models" },
+    { "type": "should_trigger", "prompt": "who should sign off on AI launches" },
+    { "type": "should_trigger", "prompt": "Can you help me draft an AI review committee charter?" },
+    { "type": "should_trigger", "prompt": "need an ai oversight body asap, whats the setup look like" },
+    { "type": "should_trigger", "prompt": "What's the model launch approval process supposed to look like?" },
+    { "type": "should_trigger", "prompt": "Please design a board-level AI safety committee structure for our organization, including how it escalates from the management level." },
+    { "type": "should_trigger", "prompt": "help me build an AI governance board with a decision-rights matrix" },
+    { "type": "should_trigger", "prompt": "how do we set up sign-off authority for risky AI deployments" },
+    { "type": "should_trigger", "prompt": "draft a charter for our AI ethics/governance council including conflict-of-interest rules" },
+    { "type": "should_trigger", "prompt": "no one here has authority to say no to a risky launch, we need that fixed" },
+    { "type": "should_not_trigger", "prompt": "Build me a multi-model LLM council that has GPT-4 and Claude debate and vote on the best answer" },
+    { "type": "should_not_trigger", "prompt": "Set up a council of LLMs to cross-check each other's outputs before returning a final answer" },
+    { "type": "should_not_trigger", "prompt": "What's our general corporate governance structure for the board of directors?" },
+    { "type": "should_not_trigger", "prompt": "Help me understand GDPR compliance requirements for our data processing" },
+    { "type": "should_not_trigger", "prompt": "Write a SECURITY.md file for our repo" },
+    { "type": "should_not_trigger", "prompt": "Set up a code review process for our engineering team" },
+    { "type": "should_not_trigger", "prompt": "How should our board structure stock option grants for new hires?" },
+    { "type": "should_not_trigger", "prompt": "Explain how a multi-agent LLM system routes tasks between different models" },
+    { "type": "should_not_trigger", "prompt": "Write our company's data privacy policy for GDPR" },
+    { "type": "should_not_trigger", "prompt": "run an eval on our model's technical safety behavior against jailbreak prompts" },
+    {
+      "type": "quality",
+      "prompt": "Set up an AI governance council for our company, we're about to launch a new generative AI feature.",
+      "expected_behavior": [
+        "recommends the hybrid model: a cross-functional management AI council for routine review, a board-level safety committee with majority-independent members for binding/frontier decisions, and an external review panel for defined trigger cases",
+        "explains that a discussion forum without explicit decision rights is not a governance council, and ties council quality to launch outcomes/incident recurrence/early dissent rather than meeting cadence",
+        "provides or points to a decision-rights matrix (tiered by risk level) and names the minimum evidence artefacts (charter, impact assessment, launch decision memo with dissent log, incident log)",
+        "points to references/governance-council-design.md for the full templates instead of dumping all detail inline"
+      ]
+    },
+    {
+      "type": "quality",
+      "prompt": "who should sign off before we ship a frontier model capability",
+      "expected_behavior": [
+        "identifies that frontier capability launches require mandatory board safety committee review, not just management council approval",
+        "surfaces the named failure modes to avoid (advisory theatre, uninformed executive veto, brittle/performative external challenge) and ties them to missing a governance layer",
+        "mentions recorded dissent and supermajority requirements for overriding a safety/security/privacy 'do not launch' recommendation",
+        "does not conflate this with a meeting-frequency or cadence question"
+      ]
+    },
+    {
+      "type": "quality",
+      "prompt": "we operate in the US, EU, UK and China — how should our AI council handle the regulatory differences across those jurisdictions",
+      "expected_behavior": [
+        "recommends one global charter with jurisdiction-specific annexes and a stricter-control-wins rule rather than four separate governance processes",
+        "names the relevant frameworks per jurisdiction (e.g. NIST AI RMF/OMB guidance for US, EU AI Act timeline for EU, principles-based regulator-led regime for UK, Interim Measures for Generative AI Services for China)",
+        "flags that the specific dates/thresholds are time-sensitive and should be verified against the official source rather than treated as permanently fixed",
+        "does not fabricate deep URLs"
+      ]
+    },
+    {
+      "type": "quality",
+      "prompt": "someone on our proposed AI review committee owns the product we're evaluating for launch, is that a problem?",
+      "expected_behavior": [
+        "flags this as a conflict-of-interest issue requiring disclosure and recusal, not just a soft judgment call",
+        "recommends a recusal register and notes the chair specifically should not own a shipping target",
+        "notes COI review should happen at both an annual and an item/decision level"
+      ]
+    }
+  ]
+}

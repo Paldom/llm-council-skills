@@ -1,0 +1,69 @@
+{
+  "skill": "llm-council-cost",
+  "cases": [
+    { "type": "should_trigger", "prompt": "our multi-model pipeline is too expensive" },
+    { "type": "should_trigger", "prompt": "cut the council's latency" },
+    { "type": "should_trigger", "prompt": "route easy queries to a cheap model and escalate" },
+    { "type": "should_trigger", "prompt": "gate the council behind a confidence check" },
+    { "type": "should_trigger", "prompt": "we call 4 models per request and the bill exploded — how do we keep quality but pay less?" },
+    { "type": "should_trigger", "prompt": "our ensemble setup costs way more than expected, need to bring the spend down without tanking quality" },
+    { "type": "should_trigger", "prompt": "how do we cut token spend on our LLM council without hurting output quality" },
+    { "type": "should_trigger", "prompt": "the debate stage between our models is way too slow, can we speed it up" },
+    { "type": "should_trigger", "prompt": "can we cache the shared prefix across all the council member calls to save money" },
+    { "type": "should_trigger", "prompt": "our council's p95 latency is killing us, what do we do" },
+    { "type": "should_trigger", "prompt": "should we route simple queries straight to a cheap model and only escalate the hard ones to the full council" },
+    { "type": "should_trigger", "prompt": "cut multi-agent orchestration cost pls, its way too much $$$ rn" },
+    { "type": "should_not_trigger", "prompt": "should we use an LLM council for this task or is one model good enough" },
+    { "type": "should_not_trigger", "prompt": "is running multiple models and merging answers even worth it here" },
+    { "type": "should_not_trigger", "prompt": "council vs single model, which should we pick for this project" },
+    { "type": "should_not_trigger", "prompt": "how do we combine the council's answers into one final response" },
+    { "type": "should_not_trigger", "prompt": "should each judge's vote be weighted or should we just majority-vote them" },
+    { "type": "should_not_trigger", "prompt": "our judges keep disagreeing, how do we synthesize their scores into one ranking" },
+    { "type": "should_not_trigger", "prompt": "our OpenAI bill is high, should we switch to a cheaper model like gpt-4o-mini" },
+    { "type": "should_not_trigger", "prompt": "how do we get our single chatbot's per-call cost down, it's just one model" },
+    { "type": "should_not_trigger", "prompt": "how do we cut our AWS EC2 and S3 costs this quarter" },
+    { "type": "should_not_trigger", "prompt": "our cloud hosting bill is too high, how do we bring down compute spend" },
+    { "type": "should_not_trigger", "prompt": "how do I optimize this slow postgres query, it's doing a full table scan" },
+    { "type": "should_not_trigger", "prompt": "add an index to speed up this SQL join" },
+    {
+      "type": "quality",
+      "prompt": "Our multi-model council costs way more than expected and is slow — how do we cut cost without losing quality?",
+      "expected_behavior": [
+        "leads with route-first gating: a cheap classifier/router in front so the expensive council path only fires on the hard tail, not every query",
+        "recommends calibrating the escalation threshold on the team's own traffic (ECE/Brier vs ground truth) rather than trusting a default cutoff",
+        "suggests structuring council prompts with a shared static prefix so all member calls hit prompt caching",
+        "frames the goal as cost-per-resolved-outcome and tells the user to re-measure any cited multiplier or percentage on their own workload rather than trusting it blindly",
+        "does not recommend routing on a member's raw self-reported confidence"
+      ]
+    },
+    {
+      "type": "quality",
+      "prompt": "We want to route easy queries to a cheap model and only escalate hard ones to the full council — how should we design that?",
+      "expected_behavior": [
+        "proposes a routing ladder: semantic/embedding router for known intents, then a learned router, escalating below a confidence/similarity threshold",
+        "warns that routing on raw self-reported confidence is unreliable and can be inversely correlated with correctness on hard tasks — calibrate the threshold instead",
+        "flags that learned routers degrade on out-of-distribution traffic and need retraining whenever the model pool changes",
+        "mentions peer disagreement among cheap members as a stronger escalation signal than any single member's self-reported confidence"
+      ]
+    },
+    {
+      "type": "quality",
+      "prompt": "Our agent's tool-use loop burns a lot of tokens per turn — should we re-route to a cheaper model every turn to save money?",
+      "expected_behavior": [
+        "advises against re-routing mid-session inside an active tool-call loop because it breaks prompt-cache locality and can invalidate in-flight tool-call sequences",
+        "recommends locking the model for the duration of the active loop and re-routing only at session or task boundaries",
+        "distinguishes this from council fan-out cost and notes agent/multi-agent token multipliers are a separate, larger overhead than a single extra council call"
+      ]
+    },
+    {
+      "type": "quality",
+      "prompt": "One slow model in our council is dragging down our overall response time even though the others finish fast — how do we fix tail latency?",
+      "expected_behavior": [
+        "explains that fan-out wall-clock time is bounded by the slowest member, so the tail-latency member dominates the council's overall latency",
+        "recommends budgeting P95/P99 latency rather than averages",
+        "suggests TTFT-based hedging triggers instead of static timeouts, with hedge load capped (e.g. around a 10% token-bucket)",
+        "clarifies that parallel dispatch only helps latency, not cost — the tokens for every member are still paid for regardless of wall-clock time"
+      ]
+    }
+  ]
+}

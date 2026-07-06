@@ -1,0 +1,65 @@
+{
+  "skill": "llm-council-architecture",
+  "cases": [
+    { "type": "should_trigger", "prompt": "Design an LLM council for our product research assistant." },
+    { "type": "should_trigger", "prompt": "build a multi-model deliberation pipeline that fans out to several LLMs" },
+    { "type": "should_trigger", "prompt": "how should the debate/synthesis stages work in a council setup?" },
+    { "type": "should_trigger", "prompt": "council architecture?" },
+    { "type": "should_trigger", "prompt": "I want three models to answer and one to merge the answers — how do I structure it?" },
+    { "type": "should_trigger", "prompt": "we're getting one model to draft, two others to critique it, and a fourth to write the final version — what's a solid structure for that pipeline?" },
+    { "type": "should_trigger", "prompt": "whats a good topology for a panel of llms that review each others answers anonymously then a chairman picks the best synthesis" },
+    { "type": "should_trigger", "prompt": "Should our multi-agent review pipeline do parallel fan-out, sequential refinement, or full debate rounds, and how many rounds before we stop?" },
+    { "type": "should_trigger", "prompt": "sketch out the stages for a council of LLMs: fan-out, peer review, then a final synthesizer" },
+    { "type": "should_trigger", "prompt": "need to structure a debate pipeline across models with a stopping rule so it doesn't run forever" },
+    { "type": "should_not_trigger", "prompt": "Should we even use an LLM council for this task, or is a single model enough?" },
+    { "type": "should_not_trigger", "prompt": "Which models should we put on our LLM council — GPT-5.5, Gemini, Grok?" },
+    { "type": "should_not_trigger", "prompt": "How do we aggregate the council members' rankings into a final score, majority vote vs weighted average?" },
+    { "type": "should_not_trigger", "prompt": "Can you help me word the prompt each council member sees so it asks for accuracy and insight?" },
+    { "type": "should_not_trigger", "prompt": "What's the cheapest way to run this multi-model setup without blowing our token budget?" },
+    { "type": "should_not_trigger", "prompt": "How do I build a basic LangGraph app with a single agent and a tool node?" },
+    { "type": "should_not_trigger", "prompt": "Design a single-agent workflow for handling customer support tickets." },
+    { "type": "should_not_trigger", "prompt": "Write unit tests for our existing council orchestration code." },
+    { "type": "should_not_trigger", "prompt": "How much does it cost to run GPT-5.5 vs Claude per million tokens?" },
+    { "type": "should_not_trigger", "prompt": "What happens if one of our council's member models goes down — should we just retry with a cheaper backup model?" },
+    {
+      "type": "quality",
+      "prompt": "Design an LLM council architecture for a high-stakes financial analysis assistant that needs multiple models to check each other.",
+      "expected_behavior": [
+        "lays out the three-stage reference pipeline: parallel fan-out with no cross-visibility, anonymized peer review/ranking, then chairman synthesis",
+        "explains anonymization is the load-bearing design choice and cites that revealing identities increased convergence (cosine similarity 0.56 to 0.77)",
+        "flags the chairman as the known weak point (over-influence re-homogenizing diversity) and offers the member-vs-separate-model chairman tradeoff",
+        "recommends restraint given the high-stakes framing: caps debate rounds (<=3) and prefers a statistical stopping rule over fixed rounds",
+        "does not perform member selection, prompt wording, or aggregation math — points to sibling skills instead"
+      ]
+    },
+    {
+      "type": "quality",
+      "prompt": "how should the debate rounds and stopping rule work if I want models to argue back and forth over a contested decision?",
+      "expected_behavior": [
+        "recommends debate/deliberation topology only for genuinely contested high-stakes calls, noting it's the most expensive and fragile option",
+        "caps rounds at <=3 and cites sycophancy compounding with more rounds",
+        "mentions a statistical/SPRT-style stopping rule as preferable to a fixed round count, with the reported ~1.01 avg rounds / 4.06 calls result",
+        "warns that early agreement is a suspect correctness signal (correlated errors) and should trigger extra sampling or escalation rather than being treated as confirmation for high-stakes runs"
+      ]
+    },
+    {
+      "type": "quality",
+      "prompt": "I want three models to answer independently and a fourth to combine their answers into one — how do I structure this and what could go wrong?",
+      "expected_behavior": [
+        "maps the request onto the fan-out plus synthesis pattern without requiring the user to have said 'council'",
+        "recommends structured JSON/parseable contracts between stages rather than free prose, and instructs the synthesizer to act as a strict reporter with no new facts",
+        "covers failure handling: a dead member should not sink the whole pipeline, chairman failure falls back to best-ranked member answer, per-member timeouts",
+        "notes cost is roughly 2N+1 calls for N members"
+      ]
+    },
+    {
+      "type": "quality",
+      "prompt": "council architecture?",
+      "expected_behavior": [
+        "asks or infers the task shape and recommends topology by shape: parallel fan-out for breadth/blind-spot detection, sequential refinement for auditable pipelines, debate only for contested high-stakes calls",
+        "cites evidence for restraint (majority voting explains most of multi-agent debate's gains; a single persuasive adversarial member can cut group accuracy 10-40%)",
+        "notes no major framework ships a council primitive as of mid-2026 and recommends hand-rolling via a LangGraph fan-out/fan-in subgraph or a CrewAI crew for prototyping"
+      ]
+    }
+  ]
+}

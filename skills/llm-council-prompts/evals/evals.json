@@ -1,0 +1,66 @@
+{
+  "skill": "llm-council-prompts",
+  "cases": [
+    { "type": "should_trigger", "prompt": "write the prompts for my LLM council" },
+    { "type": "should_trigger", "prompt": "chairman synthesis prompt" },
+    { "type": "should_trigger", "prompt": "peer review prompt for the models" },
+    { "type": "should_trigger", "prompt": "advisor system prompts" },
+    { "type": "should_trigger", "prompt": "can u draft the council member prompts, need something quick" },
+    { "type": "should_trigger", "prompt": "write a prompt that has the chairman side with the minority if their reasoning's better" },
+    { "type": "should_trigger", "prompt": "need the anonymized peer-review prompt with a parseable ranking at the end" },
+    { "type": "should_trigger", "prompt": "each of my 4 models needs different instructions so they don't all say the same thing — help me write them" },
+    { "type": "should_trigger", "prompt": "our 5 advisors keep giving the same wishy-washy answer, how do I word their prompts so they actually disagree" },
+    { "type": "should_trigger", "prompt": "give me a system prompt for a contrarian reviewer that's forced to find a flaw, not just play a skeptic persona" },
+    { "type": "should_not_trigger", "prompt": "should we use parallel fan-out or sequential refinement for our multi-model pipeline?" },
+    { "type": "should_not_trigger", "prompt": "how do we aggregate the council members' rankings into a final score?" },
+    { "type": "should_not_trigger", "prompt": "which models should we put on our council — GPT-5.5, Gemini, Grok?" },
+    { "type": "should_not_trigger", "prompt": "write a good system prompt for our customer support chatbot" },
+    { "type": "should_not_trigger", "prompt": "help me write a system prompt for my RAG app that cites sources" },
+    { "type": "should_not_trigger", "prompt": "write a jailbreak prompt to get around content filters" },
+    { "type": "should_not_trigger", "prompt": "what's the cheapest way to run this multi-model setup without blowing our token budget?" },
+    { "type": "should_not_trigger", "prompt": "one of our council members keeps timing out, how do we handle that failure gracefully?" },
+    { "type": "should_not_trigger", "prompt": "give me general tips on prompt engineering for GPT-5.5" },
+    { "type": "should_not_trigger", "prompt": "design the overall architecture for our LLM council pipeline" },
+    {
+      "type": "quality",
+      "prompt": "write the prompts for my LLM council — 5 advisors, a peer review stage, and a chairman",
+      "expected_behavior": [
+        "gives each advisor a distinct cognitive mandate (not just a persona label) so they're forced to diverge, e.g. contrarian required to find a fatal flaw",
+        "advisor prompts stay blind to each other's drafts in stage 1 and include a 150-300 word cap",
+        "peer review prompt anonymizes responses by letter and ends with a machine-parseable `FINAL RANKING:` numbered list contract",
+        "chairman prompt asks for convergence, clashes (steelmanned), blind spots, a decisive recommendation (no 'it depends'), and permission to side with a single dissenter over the majority",
+        "does not address pipeline topology, member/model selection, or aggregation math — stays scoped to prompt text"
+      ]
+    },
+    {
+      "type": "quality",
+      "prompt": "each of my 4 models needs different instructions so they don't all say the same thing — help me write them",
+      "expected_behavior": [
+        "explains that personas alone (e.g. 'you are a skeptic') produce role-play, not divergence, and reframes each of the 4 as a cognitive constraint instead",
+        "produces concrete draft system prompts for each of the 4 roles, not just advice about what to do",
+        "notes advisors should answer independently without seeing each other's outputs to avoid anchoring/fake consensus",
+        "keeps word caps and specificity instructions in each prompt"
+      ]
+    },
+    {
+      "type": "quality",
+      "prompt": "chairman synthesis prompt — I want it to be decisive and not just average the responses",
+      "expected_behavior": [
+        "produces a chairman prompt requiring: convergence points, clashes with both sides steelmanned, blind spots all members missed, a clear recommendation, and one concrete next step",
+        "explicitly permits siding with a single dissenter over the majority when their reasoning is strongest, and requires a stated confidence 0-100% plus what would change its mind",
+        "includes a quality gate against the synthesis being a mere concatenation of the member responses",
+        "instructs the chairman not to introduce facts absent from the member outputs"
+      ]
+    },
+    {
+      "type": "quality",
+      "prompt": "peer review prompt for the models — should they know which response is whose?",
+      "expected_behavior": [
+        "says responses must be anonymized before review and the letter-to-member mapping randomized per run and never persisted in the visible transcript",
+        "produces a review prompt asking each reviewer to critique every response on its own merit (reasoning, completeness, accuracy) before comparing",
+        "requires identifying the strongest response, the biggest blind spot, and what all responses missed, referenced by letter",
+        "ends with the `FINAL RANKING:` fixed-footer contract and a word cap around 200 words"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "llm-council-skills",
+  "owner": {
+    "name": "Paldom",
+    "url": "https://github.com/Paldom"
+  },
+  "plugins": [
+    {
+      "name": "llm-council-skills",
+      "source": ".",
+      "description": "Agent Skills for building and operating LLM councils - multi-model deliberation with anonymized peer review, robust aggregation, calibrated escalation, and defenses against correlated failure.",
+      "category": "development"
+    }
+  ]
+}
