@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/icon.svg" alt="llm-council-skills icon" width="128"/>
+</p>
+
 # Llm Council Skills
 
 [![CI](https://github.com/Paldom/llm-council-skills/actions/workflows/ci.yml/badge.svg)](https://github.com/Paldom/llm-council-skills/actions/workflows/ci.yml)
