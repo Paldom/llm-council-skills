@@ -1,6 +1,6 @@
 ---
 name: ai-governance-council
-description: Designs a human AI governance council - hybrid management council plus board escalation, charter and conflict-of-interest templates, decision-rights matrix, incident escalation, KPIs, and US/EU/UK/China compliance lanes. Use for "set up an AI governance board/council", "AI review committee charter", "model launch approval process". Not for multi-model LLM ensembles or technical safety evals.
+description: Designs a human AI governance council - hybrid management council plus board escalation, charter and conflict-of-interest templates, decision-rights matrix, incident escalation, KPIs, and US/EU/UK/China compliance lanes. Use for "set up an AI governance board/council", "no one has authority to say no to a risky launch", "AI review committee charter", "model launch approval process". Not for multi-model LLM ensembles or technical safety evals.
 ---
 
 # AI Governance Council

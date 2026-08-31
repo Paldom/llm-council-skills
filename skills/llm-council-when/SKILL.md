@@ -1,6 +1,6 @@
 ---
 name: llm-council-when
-description: Decides whether an LLM council (multi-model deliberation/ensemble) beats a single strong model - task-type triage, compute-normalized evidence, cost-per-resolved-outcome, benchmarking both paths on your workload. Use for "should I use multiple models", "is an LLM council/ensemble/debate worth it", "single model vs council". Not for designing the pipeline, picking members, or cutting cost.
+description: Decides whether an LLM council (multi-model deliberation/ensemble) beats a single strong model - task-type triage, compute-normalized evidence, cost-per-resolved-outcome, benchmarking both paths on your workload. Use before building anything, for "should I use multiple models at all", "is a council worth it versus one strong model", "would several AIs beat one good one". Not for designing the pipeline, picking members, or cutting cost.
 ---
 
 # LLM Council: When

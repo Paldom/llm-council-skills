@@ -1,6 +1,6 @@
 ---
 name: llm-council-cost
-description: Cuts cost and latency of multi-model LLM pipelines - route-first gating so the council fires only on hard queries, calibrated-confidence escalation, prompt caching, batching, tail-latency budgeting. Use for "the council/ensemble is too expensive or slow", "route to a cheaper model then escalate", "reduce multi-LLM cost". Not for deciding whether to adopt a council or aggregation choice.
+description: Cuts the token spend and latency of a multi-model pipeline - route-first gating so the council fires only on hard queries, confidence-based escalation, shared-prefix caching, batching, tail-latency budgets. Use when calling several models per request costs too much or takes too long, or to cache across member calls. Not for whether to adopt a council, or for aggregation.
 ---
 
 # LLM Council: Cost

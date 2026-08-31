@@ -1,7 +1,7 @@
 {
   "name": "llm-council-skills",
   "description": "Agent Skills for building and operating LLM councils - multi-model deliberation with anonymized peer review, robust aggregation, calibrated escalation, and defenses against correlated failure.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": {
     "name": "Paldom",
     "url": "https://github.com/Paldom"

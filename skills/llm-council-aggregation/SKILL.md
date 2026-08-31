@@ -1,6 +1,6 @@
 ---
 name: llm-council-aggregation
-description: Combines multiple LLM answers or judge verdicts robustly - correlated-error limits of majority voting, reliability weighting, side-swapped pairwise comparison, judge-synthesizer separation, and surfacing dissent. Use for "combine/aggregate model outputs", "LLM judge panel/jury", "majority vote across models", "rank council responses". Not for pipeline topology, member choice, or stage prompts.
+description: Aggregates several model outputs or judge verdicts into one final answer - majority voting and its correlated-error limits, reliability weighting, side-swapped pairwise comparison, judge-synthesizer separation, surfacing dissent. Use once the models have already run, to aggregate their outputs or rankings into one final answer, pick a winner, run a judge panel, or resolve disagreeing verdicts. Not for topology or cost.
 ---
 
 # LLM Council Aggregation

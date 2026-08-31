@@ -1,6 +1,6 @@
 ---
 name: llm-council-failure-modes
-description: Defends LLM councils against failure modes - sycophancy and groupthink (structured dissent, round caps, no early-stop-on-consensus), correlated-error monitoring, and prompt-injection amplification containment. Use for "models keep agreeing", "council groupthink", "multi-agent prompt injection", "consensus feels fake". Not for single-agent jailbreak hardening or member selection.
+description: Defends LLM councils against failure modes - sycophancy and groupthink (structured dissent, round caps, no early-stop-on-consensus), correlated-error monitoring, and prompt-injection amplification containment. Use for "models keep agreeing", "the reviewers rubber-stamp each other", "all our judges fail on the same inputs", "council groupthink", "multi-agent prompt injection". Not for single-agent jailbreak hardening or member selection.
 ---
 
 # LLM Council Failure Modes
